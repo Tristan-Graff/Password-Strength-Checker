@@ -19,9 +19,12 @@ def check_password_strength(password):
         ("Password should include at least one special character (!@#$%^&*()-_+=<>?).", strength["special"])
     ]
     
+<<<<<<< HEAD
     if len(password) < 8:
         return 0, "Weak", tips
     
+=======
+>>>>>>> 11c502063892f57f8efd7c8bb25a7f917e686e86
     if score <= 2:
         return score, "Weak", tips
     elif score == 3:
