@@ -2,55 +2,57 @@ import tkinter as tk
 from tkinter import ttk
 import re
 
+# List of commonly used phrases, commonly used passwords, and seasons
+common_phrases = [
+    "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware",
+    "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky",
+    "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi",
+    "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico",
+    "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania",
+    "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont",
+    "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming",
+    "password", "123456", "123456789", "qwerty", "abc123", "letmein", "111111", "iloveyou", "sunshine",
+    "Spring", "Summer", "Fall", "Winter"
+]
+
 def check_password_strength(password):
-    strength = {"length": len(password) >= 8,
-                "uppercase": any(char.isupper() for char in password),
-                "lowercase": any(char.islower() for char in password),
-                "digits": any(char.isdigit() for char in password),
-                "special": any(char in "!@#$%^&*()-_+=<>?" for char in password)}
+    strength = {
+        "length": len(password) >= 8,
+        "uppercase": any(char.isupper() for char in password),
+        "lowercase": any(char.islower() for char in password),
+        "digits": any(char.isdigit() for char in password),
+        "special": any(char in "!@#$%^&*()-_+=<>?" for char in password),
+        "common_phrases": not any(phrase.lower() in password.lower() for phrase in common_phrases)
+    }
     
-    score = sum(strength.values())
+    weights = {"length": 3, "uppercase": 1, "lowercase": 1, "digits": 1, "special": 1, "common_phrases": 1}
+    max_score = sum(weights.values())
+    score = sum(weight if met else 0 for key, (met, weight) in zip(strength.keys(), zip(strength.values(), weights.values())))
     
     tips = [
         ("Password should be at least 8 characters long.", strength["length"]),
         ("Password should include at least one uppercase letter.", strength["uppercase"]),
         ("Password should include at least one lowercase letter.", strength["lowercase"]),
         ("Password should include at least one digit.", strength["digits"]),
-        ("Password should include at least one special character (!@#$%^&*()-_+=<>?).", strength["special"])
+        ("Password should include at least one special character (!@#$%^&*()-_+=<>?).", strength["special"]),
+        ("Password should not include common phrases.", strength["common_phrases"])
     ]
     
-<<<<<<< HEAD
-    if len(password) < 8:
-        return 0, "Weak", tips
-    
-=======
->>>>>>> 11c502063892f57f8efd7c8bb25a7f917e686e86
-    if score <= 2:
-        return score, "Weak", tips
-    elif score == 3:
-        return score, "Medium", tips
-    elif score == 4:
-        return score, "Strong", tips
-    elif score == 5 and len(password) >= 12:
-        return score, "Very Strong", tips
-    elif score == 5:
-        return score, "Strong", tips
-    else:
-        return score, "Strong", tips
+    return score, max_score, tips
 
 def on_password_entry(event):
     password = entry_password.get()
-    score, strength, tips = check_password_strength(password)
-    progress_bar['value'] = (score / 5) * 100
-    label_strength.config(text=f"Password Strength: {strength}")
+    score, max_score, tips = check_password_strength(password)
+    progress_bar['value'] = (score / max_score) * 100
+    label_strength.config(text=f"Password Strength: {determine_strength(score, max_score)}")
     
-    if strength == "Weak":
+    if score <= 3:
         progress_bar['style'] = 'red.Horizontal.TProgressbar'
-    elif strength == "Medium":
+    elif score <= 5:
         progress_bar['style'] = 'yellow.Horizontal.TProgressbar'
-    elif strength == "Strong":
+    elif score <= 6:
         progress_bar['style'] = 'green.Horizontal.TProgressbar'
-    elif strength == "Very Strong":
+    else:
         progress_bar['style'] = 'blue.Horizontal.TProgressbar'
     
     # Display tips with checkmarks for met criteria
@@ -62,6 +64,16 @@ def on_password_entry(event):
         text_tips.insert(tk.END, checkmark, (color,))
         text_tips.insert(tk.END, f" {tip}\n")
     text_tips.config(state=tk.DISABLED)
+
+def determine_strength(score, max_score):
+    if score <= 3:
+        return "Weak"
+    elif score <= 5:
+        return "Medium"
+    elif score <= 6:
+        return "Strong"
+    else:
+        return "Very Strong"
 
 def toggle_password_visibility():
     if entry_password.cget('show') == '*':
@@ -79,7 +91,7 @@ def update_progressbar_length(event):
 root = tk.Tk()
 root.title("Password Strength Checker")
 root.geometry("600x400")  # Adjusted window size for better layout
-root.configure(bg='#0077BE')  # Lapris blue color
+root.configure(bg='#0077BE')  # Baby blue color
 
 # Create and place the widgets
 label_prompt = tk.Label(root, text="Enter a password:", bg='#0077BE', fg='white', font=("Helvetica", 12))
@@ -92,7 +104,8 @@ password_frame.pack(pady=10)
 entry_password = tk.Entry(password_frame, show='*', font=("Helvetica", 12))
 entry_password.pack(side='left')
 
-toggle_button = tk.Button(password_frame, text="Show", command=toggle_password_visibility, bg='#0000CD', fg='white', font=("Helvetica", 12))
+# Change button color for better accessibility
+toggle_button = tk.Button(password_frame, text="Show", command=toggle_password_visibility, bg='#4A4A4A', fg='white', font=("Helvetica", 12))  # Dark grey color
 toggle_button.pack(side='left', padx=5)
 
 entry_password.bind("<KeyRelease>", on_password_entry)
@@ -127,7 +140,8 @@ initial_tips_list = [
     ("Password should include at least one uppercase letter.", False),
     ("Password should include at least one lowercase letter.", False),
     ("Password should include at least one digit.", False),
-    ("Password should include at least one special character (!@#$%^&*()-_+=<>?).", False)
+    ("Password should include at least one special character (!@#$%^&*()-_+=<>?).", False),
+    ("Password should not include common phrases.", False)
 ]
 
 for tip, met in initial_tips_list:
