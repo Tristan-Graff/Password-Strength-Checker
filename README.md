@@ -30,8 +30,9 @@ A Python application with a graphical user interface (GUI) to check the strength
 To run the application, navigate to the project directory and execute the script:
 ```bash
 python password_checker.py
+```
 
-### Example Usage
+## Example Usage
 1. Enter a password in the input field.
 2. Click the "Show" button to toggle the visibility of the password.
 3. The strength of the password will be displayed in a progress bar and a text label.
