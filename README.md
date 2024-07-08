@@ -4,13 +4,18 @@
 A Python application with a graphical user interface (GUI) to check the strength of a password. The application evaluates the password based on multiple criteria such as length, the inclusion of uppercase letters, lowercase letters, digits, special characters, and the absence of common phrases. It provides real-time feedback and suggestions for creating a stronger password.
 
 ## Table of Contents
-1. [Installation](#installation)
-2. [Usage](#usage)
-3. [Features](#features)
-4. [Contributing](#contributing)
-5. [License](#license)
-6. [Credits](#credits)
-7. [Contact](#contact)
+1. [Features](#features)
+2. [Installation](#installation)
+3. [Usage](#usage)
+4. [License](#license)
+5. [Contact](#contact)
+
+## Features
+- Real-time password strength evaluation
+- Criteria-based feedback including length, character variety, and common phrase detection
+- Progress bar indicating password strength
+- Tips for improving password strength
+- Toggle button to show/hide password
 
 ## Installation
 1. Clone the repository:
@@ -38,12 +43,6 @@ python password_checker.py
 3. The strength of the password will be displayed in a progress bar and a text label.
 4. Suggestions for improving the password will be shown in the tips section.
 
-## Features
-- Real-time password strength evaluation
-- Criteria-based feedback including length, character variety, and common phrase detection
-- Progress bar indicating password strength
-- Tips for improving password strength
-- Toggle button to show/hide password
 
 ## License
 This project is licensed under the MIT License. See the [LICENSE](https://github.com/Tristan-Graff/Password-Strength-Checker/blob/main/LICENSE) file for details.
