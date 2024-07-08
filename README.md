@@ -65,7 +65,7 @@ To contribute to this project, please follow these steps:
 Please read the contributing guidelines for more details.
 
 ## License
-This project is licensed under the MIT License. See the LICENSE file for details.
+This project is licensed under the MIT License. See the [LICENSE](https://github.com/Tristan-Graff/Password-Strength-Checker/blob/main/LICENSE) file for details.
 
 ## Contact
 For any questions or suggestions, please contact me at [tristan.graff.1996@gmail.com](mailto:tristan.graff.1996@gmail.com).
