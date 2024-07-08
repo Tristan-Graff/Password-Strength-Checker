@@ -14,8 +14,9 @@ A Python application with a graphical user interface (GUI) to check the strength
 - Real-time password strength evaluation
 - Criteria-based feedback including length, character variety, and common phrase detection
 - Progress bar indicating password strength
-- Tips for improving password strength
+- Actionable feedback for improving password strength
 - Toggle button to show/hide password
+- High contrast accessible color scheme
 
 ## Installation
 1. Clone the repository:
